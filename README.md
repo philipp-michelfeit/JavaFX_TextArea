@@ -1,1 +1,1 @@
-Demo project for Squish TextArea bug
+# Demo project for Squish TextArea bug
