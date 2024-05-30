@@ -22,12 +22,23 @@ public class HelloController {
 
     private static final String propsFile = "src/main/resources/com/example/javafx_textarea/app.properties";
 
-    static {
+    public HelloController() {
+        init();
+    }
+
+    public void init(){
         try {
             props.load(new FileInputStream(propsFile));
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    protected void load(){
+        txtArea.setText(props.get(txtArea.getId()).toString());
+        txtField.setText(props.get(txtField.getId()).toString());
     }
 
     @FXML
@@ -41,8 +52,7 @@ public class HelloController {
 
     @FXML
     protected void onLoadButtonClick() {
-        txtArea.setText(props.get(txtArea.getId()).toString());
-        txtField.setText(props.get(txtField.getId()).toString());
+        load();
         action.setText("Loaded !");
     }
 
