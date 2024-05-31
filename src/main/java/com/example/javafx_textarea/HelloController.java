@@ -5,7 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Objects;
 import java.util.Properties;
 
 public class HelloController {
@@ -18,19 +20,16 @@ public class HelloController {
     @FXML
     private TextField txtField;
 
-    private static final Properties props = new Properties();
+    private final Properties props = new Properties();
 
-    private static final String propsFile = "src/main/resources/com/example/javafx_textarea/app.properties";
-
-    public HelloController() {
-        init();
-    }
-
-    public void init(){
-        try {
-            props.load(new FileInputStream(propsFile));
-
-        } catch (IOException e) {
+    {
+        final String resourceName = "app.properties";
+        try (InputStream resourceStream = Objects.requireNonNull(
+                HelloController.class.getResourceAsStream(resourceName),
+                "File does not exist" ) ) {
+            props.load(resourceStream);
+        }
+        catch ( IOException e ) {
             throw new RuntimeException(e);
         }
     }
@@ -45,7 +44,7 @@ public class HelloController {
     protected void onSaveButtonClick() throws IOException {
         props.put(txtArea.getId(), txtArea.getText());
         props.put(txtField.getId(), txtField.getText());
-        props.store(new FileOutputStream(propsFile), null);
+        // props.store(new FileOutputStream(propsFile), null);
         action.setText("Saved !");
 
     }
