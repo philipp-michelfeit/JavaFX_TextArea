@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -29,7 +32,7 @@ public class HelloController {
 
     {
         try (InputStream resourceStream = Objects.requireNonNull(
-                HelloController.class.getResourceAsStream(resourceName),
+                this.getClass().getResourceAsStream(resourceName),
                 "File does not exist" ) ) {
             props.load(resourceStream);
         }
@@ -50,7 +53,9 @@ public class HelloController {
         props.put(txtField.getId(), txtField.getText());
 
         try {
-            File file = new File(Objects.requireNonNull(this.getClass().getResource(resourceName)).toURI());
+            URI uri = Objects.requireNonNull(this.getClass().getResource(resourceName)).toURI();
+            Path path = Paths.get(uri);
+            File file = path.toFile();
             props.store(new FileOutputStream(file), null);
         }
         catch (IOException | URISyntaxException e ) {
