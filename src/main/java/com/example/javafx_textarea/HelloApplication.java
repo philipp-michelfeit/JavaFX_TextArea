@@ -14,6 +14,10 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 640, 284);
         stage.setTitle("Squish - TextArea vs TextField save example");
         stage.setScene(scene);
+        stage.setOnShowing(event -> {
+            HelloController con = fxmlLoader.getController();
+            con.load();
+        });
         stage.show();
     }
 
