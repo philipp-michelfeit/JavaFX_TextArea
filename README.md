@@ -2,7 +2,7 @@
 
 ## Build project
 1. mvn clean javafx:jlink
-2. mvn process-resources
+2. mvn process-resources ( workaround for not copying props.properties file correctly via maven plugin )
 
 ## Run project
 1. cd target/app/bin/
