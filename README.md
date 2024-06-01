@@ -1,3 +1,9 @@
 # Demo project for Squish TextArea bug
 
-For more infos how to build and run see: https://github.com/openjfx/javafx-maven-plugin
+## Build project
+1. mvn clean javafx:jlink
+2. mvn process-resources
+
+## Run project
+1. cd target/app/bin/
+2. ./app.bat
