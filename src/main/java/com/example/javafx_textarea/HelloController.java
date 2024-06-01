@@ -6,14 +6,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Objects;
 import java.util.Properties;
 
 public class HelloController {
@@ -28,21 +24,27 @@ public class HelloController {
 
     private static final Properties props = new Properties();
 
-    final String resourceName = "app.properties";
+    final String resourceName = "conf/props.properties";
 
     {
-        try (InputStream resourceStream = Objects.requireNonNull(
-                this.getClass().getResourceAsStream(resourceName),
-                "File does not exist" ) ) {
-            props.load(resourceStream);
-        }
-        catch ( IOException e ) {
+        try {
+            File cwd = Path.of("").toAbsolutePath().toFile();
+            if (Path.of("").toAbsolutePath().toString().contains("target")) {
+
+                String base = cwd.getParent();
+
+                props.load(new FileInputStream(new File(base + "/" + resourceName)));
+            } else {
+
+                props.load(new FileInputStream(new File(cwd + "/" + resourceName)));
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     @FXML
-    public void load(){
+    public void load() {
         txtArea.setText(props.get(txtArea.getId()).toString());
         txtField.setText(props.get(txtField.getId()).toString());
     }
@@ -53,12 +55,17 @@ public class HelloController {
         props.put(txtField.getId(), txtField.getText());
 
         try {
-            URI uri = Objects.requireNonNull(this.getClass().getResource(resourceName)).toURI();
-            Path path = Paths.get(uri);
-            File file = path.toFile();
-            props.store(new FileOutputStream(file), null);
-        }
-        catch (IOException | URISyntaxException e ) {
+            File cwd = Path.of("").toAbsolutePath().toFile();
+            if (Path.of("").toAbsolutePath().toString().contains("target")) {
+
+                String base = cwd.getParent();
+
+                props.load(new FileInputStream(new File(base + "/" + resourceName)));
+            } else {
+
+                props.store(new FileOutputStream(new File(cwd + "/" + resourceName)), null);
+            }
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
