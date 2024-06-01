@@ -60,7 +60,7 @@ public class HelloController {
 
                 String base = cwd.getParent();
 
-                props.load(new FileInputStream(new File(base + "/" + resourceName)));
+                props.store(new FileOutputStream(new File(base + "/" + resourceName)), null);
             } else {
 
                 props.store(new FileOutputStream(new File(cwd + "/" + resourceName)), null);
