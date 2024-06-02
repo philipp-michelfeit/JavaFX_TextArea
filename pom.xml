@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.10.0</junit.version>
+        <junit.version>5.10.2</junit.version>
     </properties>
 
     <dependencies>
@@ -48,16 +48,17 @@
                 <version>3.3.1</version>
                 <executions>
                     <execution>
-                        <id>copy-resource-one</id>
-                        <phase>generate-sources</phase>
+                        <id>copy-resource</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
                             <outputDirectory>${basedir}/target/app/conf</outputDirectory>
+                            <overwrite>true</overwrite>
                             <resources>
                                 <resource>
-                                    <directory>conf</directory>
+                                    <directory>${basedir}/conf</directory>
                                     <includes>
                                         <include>props.properties</include>
                                     </includes>

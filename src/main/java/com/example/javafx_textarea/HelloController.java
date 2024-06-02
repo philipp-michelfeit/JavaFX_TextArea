@@ -29,7 +29,7 @@ public class HelloController {
     {
         try {
             File cwd = Path.of("").toAbsolutePath().toFile();
-            if (Path.of("").toAbsolutePath().toString().contains("target")) {
+            if (Path.of("").toAbsolutePath().toString().contains("app")) {
 
                 String base = cwd.getParent();
 
@@ -56,7 +56,7 @@ public class HelloController {
 
         try {
             File cwd = Path.of("").toAbsolutePath().toFile();
-            if (Path.of("").toAbsolutePath().toString().contains("target")) {
+            if (Path.of("").toAbsolutePath().toString().contains("app")) {
 
                 String base = cwd.getParent();
 
